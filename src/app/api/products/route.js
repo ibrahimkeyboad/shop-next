@@ -1,10 +1,10 @@
-import connectDB from '@/db';
+import db from '@/db';
 import Product from '@/models/productModel';
 import { NextResponse } from 'next/server';
 
 export async function GET(req) {
   try {
-    await connectDB();
+    await db.connect();
     const { searchParams } = new URL(req.url);
 
     console.log(searchParams);
@@ -26,12 +26,17 @@ export async function GET(req) {
     const products = await Product.find({ ...keyword })
       .limit(limit)
       .skip(skip);
+
+    await db.disconnect();
+
     return NextResponse.json({
       products,
       pages: Math.ceil(count / limit),
       page,
     });
   } catch (error) {
+    await db.disconnect();
+
     return new NextResponse(`${error}`, { status: 500 });
   }
 }

@@ -1,9 +1,10 @@
+'use client';
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 function SearchingBox() {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [keyword, setKeyword] = React.useState('');
 
   function searchHandler(e) {
@@ -11,7 +12,7 @@ function SearchingBox() {
     if (keyword.trim()) {
       navigate(`/search/${keyword}`);
     } else {
-      navigate('/');
+      navigate.push('/');
     }
   }
   return (

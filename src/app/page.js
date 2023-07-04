@@ -1,6 +1,6 @@
 import PageIndex from '@/components/Pagination';
 
-async function HomeScreen({ searchParams: { keyword, page } }) {
+async function HomeScreen({ searchParams: { keyword = '', page = 1 } }) {
   const res = await fetch(
     `http://localhost:3000/api/products?page=${page}&keyword=${keyword}`
   );

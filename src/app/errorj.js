@@ -15,7 +15,7 @@ const Error = ({ error, reset }) => {
         <img src={'/images/not-found.svg'} alt='not found' />
         <h3>Ohh! page not found</h3>
         <p>{`We can't seem to find the page you're looking for`}</p>
-        <Link to='/'>back home</Link>
+        <Link href='/'>back home</Link>
       </div>
     </Wrapper>
   );
