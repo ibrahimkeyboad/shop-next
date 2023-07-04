@@ -1,6 +1,7 @@
 import db from '@/db';
 import User from '@/models/userModel';
 import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import validator from 'validator';
 
 export const authOptions = {
