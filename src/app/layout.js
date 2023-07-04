@@ -1,4 +1,4 @@
-import { AppProvider } from '@/context/appContext';
+import Providers from '@/Providers';
 import './globals.css';
 import { Inter } from 'next/font/google';
 
@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <AppProvider>{children}</AppProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

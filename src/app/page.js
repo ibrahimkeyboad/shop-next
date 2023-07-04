@@ -1,49 +1,21 @@
-'use client';
-import React, { memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Col, Row } from 'react-bootstrap';
-import { useEffect } from 'react';
-import Product from '../components/product';
-import Loader from '../components/notes/loader';
-import { getProducts } from '../app/product/productSlice';
-import { useParams } from 'react-router-dom';
-import Paginate from '../components/paginate';
+import PageIndex from '@/components/Pagination';
 
-function HomeScreen() {
-  const dispatch = useDispatch();
-  const params = useParams();
-  const keyword = params.keyword || '';
-  const pageNumber = params.pageNumber || '';
-  const { products, loading, pages, page, error, message } = useSelector(
-    (state) => state.ProductReducer
+async function HomeScreen({ searchParams: { keyword, page } }) {
+  const res = await fetch(
+    `http://localhost:3000/api/products?page=${page}&keyword=${keyword}`
   );
-  console.log(pages, page);
-  console.log(pageNumber, keyword);
-  useEffect(() => {
-    document.title = 'Shops';
-    dispatch(getProducts({ keyword, pageNumber }));
-  }, [dispatch, keyword, pageNumber]);
+  const data = await res.json();
+  const products = data.products;
+  const params = { pages: data.pages, page: data.page };
+
+  console.log(data);
 
   return (
     <>
       <h1>latest Product</h1>
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <span className='alert-danger p-2 mt-2'>{message}</span>
-      ) : (
-        <>
-          <Row>
-            {products?.map((product) => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product {...product} />
-              </Col>
-            ))}
-          </Row>
-          <Paginate pages={pages} page={page} keyword={keyword} />
-        </>
-      )}
+
+      <PageIndex products={products} params={params} />
     </>
   );
 }
-export default memo(HomeScreen);
+export default HomeScreen;
