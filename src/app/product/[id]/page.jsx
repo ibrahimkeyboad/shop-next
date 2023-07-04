@@ -4,7 +4,7 @@ import ProductReview from '../components/ProductReview';
 import { url } from '@/utils/api';
 
 async function Page({ params }) {
-  const res = await fetch(`${url}/api/products/${params.id}`);
+  const res = await fetch(`${url}api/products/${params.id}`);
 
   const product = await res.json();
 
