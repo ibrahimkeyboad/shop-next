@@ -15,7 +15,7 @@ async function Page({ params }) {
         Go back
       </Link>
       <ProductCard product={product} />
-      <ProductReview />
+      <ProductReview reviews={product.reviews} />
     </div>
   );
 }
