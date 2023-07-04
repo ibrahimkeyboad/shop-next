@@ -26,13 +26,13 @@ function Header() {
               </Link>
               {user ? (
                 <NavDropdown title={title} id='username'>
-                  <Link href='/profile'>
+                  <Link prefetch={false} href='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </Link>
                   <NavDropdown.Item>Logut</NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <Link className='nav-link ml-2' href='/login'>
+                <Link className='nav-link ml-2' prefetch={false} href='/login'>
                   <FaUser />
                   Sign In
                 </Link>

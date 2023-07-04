@@ -68,7 +68,10 @@ function ProductReview({ reviews }) {
               </Form>
             ) : (
               <p>
-                Please <Link href='/login'>Login</Link>
+                Please{' '}
+                <Link href='/login' prefetch={false}>
+                  Login
+                </Link>
               </p>
             )}
           </ListGroup.Item>
