@@ -1,9 +1,17 @@
+import db from '@/db';
 import Product from '@/models/productModel';
+import { NextResponse } from 'next/server';
 
-export async function GET(req) {
-  const product = await Product.findById(req.params.id).populate('reviews');
-  res.status(200).json({
-    status: 'success',
-    product,
-  });
+export async function GET(req, { params }) {
+  try {
+    await db.connect();
+    const product = await Product.findById({ _id: params.id }).populate(
+      'reviews'
+    );
+
+    await db.disconnect();
+    return NextResponse.json(product);
+  } catch (err) {
+    return new NextResponse(`${err}`, { status: 500 });
+  }
 }

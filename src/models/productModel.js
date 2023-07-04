@@ -1,4 +1,5 @@
 import { Schema, model, models } from 'mongoose';
+import Review from './reviewModel';
 
 const productSchema = new Schema(
   {
@@ -53,7 +54,7 @@ const productSchema = new Schema(
 );
 
 productSchema.virtual('reviews', {
-  ref: 'Review',
+  ref: Review,
   foreignField: 'product',
   localField: '_id',
 });
