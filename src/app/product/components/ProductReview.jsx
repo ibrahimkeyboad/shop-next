@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 
-function ProductReview({ reviews }) {
+function ProductReview({ reviews = [] }) {
   const user = null;
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
@@ -68,7 +68,7 @@ function ProductReview({ reviews }) {
               </Form>
             ) : (
               <p>
-                Please{' '}
+                Please
                 <Link href='/login' prefetch={false}>
                   Login
                 </Link>
