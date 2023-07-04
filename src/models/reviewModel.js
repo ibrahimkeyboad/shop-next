@@ -1,4 +1,4 @@
-const { Schema, model, models } = require('mongoose');
+import { Schema, model, models } from 'mongoose';
 
 const reviewSchema = new Schema(
   {
@@ -39,4 +39,4 @@ reviewSchema.pre(/^find/, function (next) {
 
 const Review = models.Review || model('Review', reviewSchema);
 
-module.exports = Review;
+export default Review;
