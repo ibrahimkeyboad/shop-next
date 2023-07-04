@@ -62,8 +62,8 @@ export async function UPDATE(req) {
   res.status(200).json(upOrder);
 }
 
-exports.userOrder = catchAsync(async (req, res, next) => {
-  const order = await Order.find({ user: req.user.id });
+// exports.userOrder = catchAsync(async (req, res, next) => {
+//   const order = await Order.find({ user: req.user.id });
 
-  res.status(200).json(order);
-});
+//   res.status(200).json(order);
+// });
