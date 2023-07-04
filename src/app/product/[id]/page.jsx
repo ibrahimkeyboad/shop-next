@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import ProductCard from '../components/ProductCard';
 import ProductReview from '../components/ProductReview';
+import { url } from '@/utils/api';
 
 async function Page({ params }) {
-  const res = await fetch(`http://localhost:3000/api/products/${params.id}`);
+  const res = await fetch(`${url}/api/products/${params.id}`);
 
   const product = await res.json();
 
