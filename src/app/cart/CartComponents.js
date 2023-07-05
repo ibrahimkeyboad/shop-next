@@ -13,37 +13,18 @@ import { FaTrash } from 'react-icons/fa';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { url } from '@/utils/api';
+import { useAddToCartQuery } from '@/context/cart/api';
 
 function CartComponents({ id, quantity }) {
   const navigate = useRouter();
+  const { isLoading, data } = useAddToCartQuery(id, quantity);
   const [cartItems, setCartItems] = useState([]);
+  console.log('data', data);
+
   function checkoutHandler() {
     navigate.push('/login?redirect=shipping');
-  }
-
-  function addToCart() {
-    axios.get(`${http}/api/products/${id}`).then((data) => {
-      const product = {
-        product: data.product._id,
-        name: data.product.name,
-        image: data.product.image,
-        price: data.product.price,
-        countInStock: data.product.countInStock,
-        quantity,
-      };
-    });
-
-    const existItem = state.cartItems.find((x) => x.product === item.product);
-    if (existItem) {
-      state.cartItems.map((x) => {
-        console.log(x.product, existItem.product);
-        console.log('item', item);
-        return x.product === existItem.product ? (x.qty = item.qty) : x;
-      });
-    } else {
-      state.cartItems = [...state.cartItems, item];
-    }
   }
 
   return (
@@ -70,12 +51,12 @@ function CartComponents({ id, quantity }) {
                   <Col md={2}>
                     <Form.Control
                       as='select'
-                      value={item.qty}
+                      value={item.quantity}
                       onChange={(e) => {
-                        console.log(item.product, +e.target.value);
-                        dispatch(
-                          addToCart({ id: item.product, qty: +e.target.value })
-                        );
+                        addToCart({
+                          id: item.product,
+                          quantity: +e.target.value,
+                        });
                       }}>
                       {[...Array(item.countInStock).keys()].map((x) => (
                         <option key={x + 1} value={x + 1}>
@@ -103,11 +84,12 @@ function CartComponents({ id, quantity }) {
           <ListGroup variant='flush'>
             <ListGroup.Item>
               <h3>
-                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                Subtotal (
+                {cartItems.reduce((acc, item) => acc + item.quantity, 0)})
               </h3>
               $
               {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .reduce((acc, item) => acc + item.quantity * item.price, 0)
                 .toFixed(2)}
             </ListGroup.Item>
             <ListGroup.Item>

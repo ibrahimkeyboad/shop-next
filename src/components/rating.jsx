@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
 
-function Rating({ value, text, color }) {
+function Rating({ value, text, color = '#f8e825' }) {
   return (
     <div className='rating'>
       <span style={{ color }}>
@@ -54,8 +54,4 @@ function Rating({ value, text, color }) {
   );
 }
 
-Rating.defaultProps = {
-  color: '#f8e825',
-};
-
-export default React.memo(Rating);
+export default Rating;
