@@ -1,9 +1,10 @@
 import './globals.css';
 import './bootstrap.min.css';
-import Providers from '@/Providers';
+import Providers from '@/Providers/Auth';
 import { Inter } from 'next/font/google';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import Style from '@/Providers/Style';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +19,9 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <Providers>
           <Header />
-          <main className='py-3'>{children}</main>
+          <main className='py-3'>
+            <Style>{children}</Style>
+          </main>
           <Footer />
         </Providers>
       </body>

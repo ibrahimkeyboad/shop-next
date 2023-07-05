@@ -1,5 +1,6 @@
 'use client';
 import Rating from '@/components/rating';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import {
   Button,
@@ -13,8 +14,11 @@ import {
 
 function ProductCard({ product }) {
   const [quantity, SetQuantity] = useState(1);
+  const navigate = useRouter();
 
-  function addToCartHandler() {}
+  function addToCartHandler() {
+    navigate.push(`/cart?id=${product.id}&quantity=${quantity}`);
+  }
 
   return (
     <Row>

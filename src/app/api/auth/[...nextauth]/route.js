@@ -1,4 +1,5 @@
 import db from '@/db';
+import bcryptjs from 'bcryptjs';
 import User from '@/models/userModel';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -26,15 +27,10 @@ export const authOptions = {
           email: credentials.email.trim().toLowerCase(),
         });
 
-        if (!user.iEmailVerified) {
-          await VerificationToken.findOneAndDelete({ identifier: user._id });
-
-          await sendEmailVerification(user);
-
-          throw new Error('Your email is not verified.');
+        if (!user) {
+          throw new Error('Account not found');
         }
-
-        const isCorrectPassword = await bcrypt.compare(
+        const isCorrectPassword = await bcryptjs.compare(
           credentials.password,
           user.password
         );

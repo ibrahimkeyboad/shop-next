@@ -5,18 +5,12 @@ import { useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { signIn } from 'next-auth/react';
 
-function LoginForm({ location }) {
+function LoginForm({ redirect = '/' }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const navigate = useRouter();
-
-  const error = '';
-
-  const redirect = '';
-
-  // const redirect = location.search ? location.search.split('=')[1] : '';
-  // console.log(redirect);
 
   async function loginHandler(e) {
     e.preventDefault();
@@ -26,15 +20,22 @@ function LoginForm({ location }) {
       password,
       redirect: false,
     });
-    console.log(email, password);
+
+    if (res.ok && res.error) {
+      console.log(res);
+      setError(res.error);
+    } else {
+      navigate.push(redirect);
+    }
   }
+  console.log(error);
   return (
     <Container>
       <Row className='justify-content-md-center'>
         <Col xs={12} md={6}>
           <h1>Sign In</h1>
           <Form onSubmit={loginHandler}>
-            {error && <p className='alert-danger p-2'>{message}</p>}
+            {error && <p className='alert-danger p-2'>{error}</p>}
             <Form.Group>
               <Form.Label id='email'>Email Address</Form.Label>
               <Form.Control
@@ -59,7 +60,7 @@ function LoginForm({ location }) {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
-            <Button className='mt-2' type='submit' variant='primary'>
+            <Button className='mt-4' type='submit' variant='primary'>
               Sign In
             </Button>
           </Form>

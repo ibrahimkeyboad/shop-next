@@ -69,7 +69,7 @@ function ProductReview({ reviews = [] }) {
             ) : (
               <p>
                 Please
-                <Link href='/login' prefetch={false}>
+                <Link href='/login' >
                   Login
                 </Link>
               </p>
